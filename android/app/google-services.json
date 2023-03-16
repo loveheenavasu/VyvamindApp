@@ -1,33 +1,33 @@
 {
   "project_info": {
-    "project_number": "170423926906",
-    "project_id": "vyvamindapp",
-    "storage_bucket": "vyvamindapp.appspot.com"
+    "project_number": "610039438822",
+    "project_id": "vyvamind",
+    "storage_bucket": "vyvamind.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:170423926906:android:057290154da48d4a993bc3",
+        "mobilesdk_app_id": "1:610039438822:android:c6d7c6af96d4b075c48a27",
         "android_client_info": {
           "package_name": "com.vyvamindapp"
         }
       },
       "oauth_client": [
         {
-          "client_id": "170423926906-ra7v97tt0gqu6ebuj0ov11dasc18rg9b.apps.googleusercontent.com",
+          "client_id": "610039438822-vv683e68a35gs9403eqv8mdrga39jn44.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyDIfDwIymXzaTOwb7rE7mHG0lWZMtSlfsY"
+          "current_key": "AIzaSyAAaQKpVKdQyM1KugZQq6cj1IiGOuTPUas"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "170423926906-ra7v97tt0gqu6ebuj0ov11dasc18rg9b.apps.googleusercontent.com",
+              "client_id": "610039438822-vv683e68a35gs9403eqv8mdrga39jn44.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
