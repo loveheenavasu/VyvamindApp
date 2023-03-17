@@ -34,7 +34,9 @@ const Purchase = () => {
     Storage.getData(UserId)
       .then(res => {
         if (res) {
+          let mData = JSON.parse(res);
           setShowLogin(false);
+          getData(mData?.uid);
         }
       })
       .catch(Error => {
@@ -42,21 +44,16 @@ const Purchase = () => {
       });
   }, []);
 
-  useEffect(() => {
-    // const usersCollection = firestore().collection('Users');
-    // const userDocument = firestore().collection('Users').doc('ABC');
-    // console.log('-------usersCollection---->', usersCollection);
-    // console.log('-------userDocument---->', userDocument);
-    // firestore()
-    //   .collection('Users')
-    //   .add({
-    //     name: 'Ada Lovelace',
-    //     age: 30,
-    //   })
-    //   .then(() => {
-    //     console.log('User added!');
-    //   });
-  }, []);
+  const getData = (uid: any) => {
+    firestore()
+      .collection('Users')
+      .doc(uid)
+      .onSnapshot(documentSnapshot => {
+        let mRes = documentSnapshot.data();
+        setQuantity(mRes?.bottle?.toString());
+        setDose(mRes?.dose?.toString());
+      });
+  };
 
   const submit = () => {
     if (!email) {
