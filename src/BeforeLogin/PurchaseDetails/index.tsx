@@ -70,11 +70,13 @@ const Purchase = () => {
         text1: 'Please enter valid email',
       });
     } else {
+      Keyboard.dismiss();
       setShowLoader(true);
       auth()
         .createUserWithEmailAndPassword(email, 'SuperSecretPassword!')
         .then(res => {
           console.log('User account created & signed in!', res);
+          Login();
         })
         .catch(error => {
           if (error.code === 'auth/email-already-in-use') {
@@ -91,17 +93,27 @@ const Purchase = () => {
     }
   };
 
-  const Login = () => {
+  const Login = async () => {
     auth()
       .signInWithEmailAndPassword(email, 'SuperSecretPassword!')
       .then(res => {
         setShowLoader(false);
         if (res) {
-          console.log('--res?.user------->', res?.user?.email);
-          Storage.storeData(
-            UserId,
-            JSON.stringify({uid: res?.user?.uid, email: res?.user?.email}),
-          );
+          res?.user
+            ?.getIdToken()
+            .then(token => {
+              Storage.storeData(
+                UserId,
+                JSON.stringify({
+                  uid: res?.user?.uid,
+                  email: res?.user?.email,
+                  token: token,
+                }),
+              );
+            })
+            .catch(Error => {
+              console.log('--Error------->', Error);
+            });
           setShowLogin(false);
         }
       })
@@ -117,12 +129,40 @@ const Purchase = () => {
         text1: 'All fields are required',
       });
     } else {
-      navigation.dispatch(
-        CommonActions.reset({
-          index: 0,
-          routes: [{name: 'AfterLoginStack'}],
-        }),
-      );
+      Keyboard.dismiss();
+      setShowLoader(true);
+      Storage.getData(UserId)
+        .then(res => {
+          let userData = JSON.parse(res);
+          firestore()
+            .collection('Users')
+            .doc(userData?.uid)
+            .set({
+              name: 'Test',
+              email: userData?.email,
+              uid: userData?.uid,
+              token: userData?.token,
+              bottle: parseInt(quantity),
+              dose: parseInt(dose),
+              time: new Date(),
+            })
+            .then(res => {
+              setShowLoader(false);
+              navigation.dispatch(
+                CommonActions.reset({
+                  index: 0,
+                  routes: [{name: 'AfterLoginStack'}],
+                }),
+              );
+            })
+            .catch(Error => {
+              setShowLoader(false);
+              console.log('---Error----->', Error);
+            });
+        })
+        .catch(Error => {
+          console.log('-Error------->', Error);
+        });
     }
   };
 

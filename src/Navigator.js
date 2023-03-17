@@ -45,7 +45,7 @@ const Navigator = () => {
     Storage.getData(UserId)
       .then(res => {
         if (res) {
-          console.log('----res---->', res);
+          // console.log('----res---->', res);
         } else {
           console.log('----res--else-->', res);
         }

@@ -21,7 +21,7 @@ const DosageReminderScreen = () => {
       .then(res => {
         console.log('------res---->', res);
         if (res) {
-          // setIsEnabled(true)
+          setIsEnabled(true)
           let mJSONValue = JSON.parse(res);
           console.log('---isEnabled---->', mJSONValue?.isEnabled);
         }
