@@ -14,10 +14,10 @@ const DosageReminderScreen = () => {
   }, []);
 
   return (
-    <SafeAreaView style={{flex: 1}}>
+    <>
       {showSplash ? <SplashScreen /> : <Navigator />}
       <Toast />
-    </SafeAreaView>
+    </>
   );
 };
 

@@ -3,7 +3,7 @@ import {Text, StyleSheet, TextStyle} from 'react-native';
 import {scale} from 'react-native-size-matters';
 
 interface Props {
-  title: number | string;
+  title: number | string |undefined ;
   styles?: TextStyle;
 }
 
