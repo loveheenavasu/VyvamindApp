@@ -21,7 +21,7 @@ const Footer = () => {
 const styles = StyleSheet.create({
   main: {
     width: '100%',
-    height: verticalScale(30),
+    height: verticalScale(40),
     backgroundColor: '#000',
     flexDirection: 'row',
     justifyContent: 'space-between',

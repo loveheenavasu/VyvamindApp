@@ -49,7 +49,7 @@ const Purchase = () => {
       .collection('Users')
       .doc(uid)
       .onSnapshot(documentSnapshot => {
-        let mRes = documentSnapshot.data();
+        let mRes = documentSnapshot?.data();
         setQuantity(mRes?.bottle?.toString());
         setDose(mRes?.dose?.toString());
       });
