@@ -29,6 +29,7 @@ const Purchase = () => {
   const [showLogin, setShowLogin] = useState<boolean>(true);
   const [email, setEmail] = useState<string>('');
   const [showLoader, setShowLoader] = useState<boolean>(false);
+  const [token, setToken] = useState<string>('');
 
   useEffect(() => {
     Storage.getData(UserId)
@@ -42,9 +43,10 @@ const Purchase = () => {
       .catch(Error => {
         console.log('-----Error--->', Error);
       });
-  }, []);
+  }, [token]);
 
   const getData = (uid: any) => {
+    setShowLoader(true);
     firestore()
       .collection('Users')
       .doc(uid)
@@ -52,6 +54,15 @@ const Purchase = () => {
         let mRes = documentSnapshot?.data();
         setQuantity(mRes?.bottle?.toString());
         setDose(mRes?.dose?.toString());
+        setShowLoader(false);
+        if (mRes?.bottle) {
+          navigation.dispatch(
+            CommonActions.reset({
+              index: 0,
+              routes: [{name: 'AfterLoginStack'}],
+            }),
+          );
+        }
       });
   };
 
@@ -94,7 +105,6 @@ const Purchase = () => {
     auth()
       .signInWithEmailAndPassword(email, 'SuperSecretPassword!')
       .then(res => {
-        setShowLoader(false);
         if (res) {
           res?.user
             ?.getIdToken()
@@ -107,11 +117,18 @@ const Purchase = () => {
                   token: token,
                 }),
               );
+              setToken(token);
+              setShowLoader(false);
             })
             .catch(Error => {
+              setShowLoader(false);
               console.log('--Error------->', Error);
             });
           setShowLogin(false);
+        }
+        else
+        {
+          setShowLoader(false);
         }
       })
       .catch(Error => {
