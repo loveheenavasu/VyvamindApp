@@ -1,0 +1,13 @@
+diff --git a/node_modules/react-native/index.js b/node_modules/react-native/index.js
+index f556fa3..1abe6c2 100644
+--- a/node_modules/react-native/index.js
++++ b/node_modules/react-native/index.js
+@@ -8,7 +8,7 @@
+  * @flow
+  */
+ 
+-'use strict';
++// 'use strict';
+ 
+ // Components
+ import typeof AccessibilityInfo from './Libraries/Components/AccessibilityInfo/AccessibilityInfo';
