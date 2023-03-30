@@ -18,14 +18,26 @@ const DosageReminderScreen = () => {
   const [selectedTime, setSelectedTime] = useState('');
 
   useEffect(() => {
-    console.log('---Home------>', 1234);
     getFirebaseFunction();
   }, []);
 
   getFirebaseFunction = async () => {
-    const mCheck = await firebase.functions().httpsCallable('helloWorld');
+    // const mCheck = await firebase.functions().httpsCallable('helloWorld')({})
+    const {data} = await firebase.functions().httpsCallable('checkProduct')({
+      page: 1,
+      limit: 15,
+    });
 
-    console.log('----mCheck-------->', mCheck);
+    console.log('------data--->', data);
+
+    // mCheck()
+    //   .then(res => {
+    //     console.log('-----res---->', res);
+    //   })
+    //   .catch(Error => {
+    //     console.log('-----Error---->', Error);
+    //   });
+    // console.log('----mCheck-------->', mCheck);
   };
 
   useEffect(() => {

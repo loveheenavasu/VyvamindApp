@@ -21,7 +21,7 @@ import Loader from '../../CommonComponnet/Loader';
 import * as Storage from '../../Service/Storage';
 import {UserId} from '../../Util/StorageKey';
 import firestore from '@react-native-firebase/firestore';
-
+import messaging from '@react-native-firebase/messaging';
 const Purchase = () => {
   const navigation = useNavigation<any>();
   const [quantity, setQuantity] = useState<string>('');
@@ -106,8 +106,8 @@ const Purchase = () => {
       .signInWithEmailAndPassword(email, 'SuperSecretPassword!')
       .then(res => {
         if (res) {
-          res?.user
-            ?.getIdToken()
+          messaging()
+            .getToken()
             .then(token => {
               Storage.storeData(
                 UserId,
@@ -119,12 +119,11 @@ const Purchase = () => {
               );
               setToken(token);
               setShowLoader(false);
+              setShowLogin(false);
             })
             .catch(Error => {
-              setShowLoader(false);
-              console.log('--Error------->', Error);
+              console.log('------Error----->', Error);
             });
-          setShowLogin(false);
         } else {
           setShowLoader(false);
         }
@@ -135,6 +134,7 @@ const Purchase = () => {
   };
 
   const submitQuantity = () => {
+    const currentDate = new Date();
     if (!quantity || !dose) {
       Toast.show({
         type: 'error',
@@ -146,6 +146,10 @@ const Purchase = () => {
       Storage.getData(UserId)
         .then((res: any) => {
           let userData = JSON.parse(res);
+          let totalDoseDay = (parseInt(quantity) * 60) / parseInt(dose);
+          let doseEndDay = totalDoseDay - 2;
+          currentDate.setDate(currentDate.getDate() + doseEndDay);
+
           firestore()
             .collection('Users')
             .doc(userData?.uid)
@@ -156,7 +160,7 @@ const Purchase = () => {
               token: userData?.token,
               bottle: parseInt(quantity),
               dose: parseInt(dose),
-              time: new Date(),
+              startNotificationDate: new Date(currentDate),
             })
             .then(res => {
               setShowLoader(false);
