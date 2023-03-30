@@ -125,9 +125,7 @@ const Purchase = () => {
               console.log('--Error------->', Error);
             });
           setShowLogin(false);
-        }
-        else
-        {
+        } else {
           setShowLoader(false);
         }
       })
@@ -146,7 +144,7 @@ const Purchase = () => {
       Keyboard.dismiss();
       setShowLoader(true);
       Storage.getData(UserId)
-        .then(res => {
+        .then((res: any) => {
           let userData = JSON.parse(res);
           firestore()
             .collection('Users')

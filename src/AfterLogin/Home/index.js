@@ -7,6 +7,7 @@ import Notifications from '../../Util/Notification';
 import styles from './styles';
 import * as Storage from '../../Service/Storage';
 import Toast from 'react-native-toast-message';
+import {firebase} from '@react-native-firebase/functions';
 
 const DosageReminderScreen = () => {
   const [isEnabled, setIsEnabled] = useState(false);
@@ -17,11 +18,22 @@ const DosageReminderScreen = () => {
   const [selectedTime, setSelectedTime] = useState('');
 
   useEffect(() => {
+    console.log('---Home------>', 1234);
+    getFirebaseFunction();
+  }, []);
+
+  getFirebaseFunction = async () => {
+    const mCheck = await firebase.functions().httpsCallable('helloWorld');
+
+    console.log('----mCheck-------->', mCheck);
+  };
+
+  useEffect(() => {
     Storage.getData('ISENABLE')
       .then(res => {
         console.log('------res---->', res);
         if (res) {
-          setIsEnabled(true)
+          setIsEnabled(true);
           let mJSONValue = JSON.parse(res);
           console.log('---isEnabled---->', mJSONValue?.isEnabled);
         }
