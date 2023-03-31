@@ -32,18 +32,27 @@ const Purchase = () => {
   const [token, setToken] = useState<string>('');
 
   useEffect(() => {
-    Storage.getData(UserId)
-      .then(res => {
-        if (res) {
-          let mData = JSON.parse(res);
-          setShowLogin(false);
-          getData(mData?.uid);
-        }
-      })
-      .catch(Error => {
-        console.log('-----Error--->', Error);
-      });
-  }, [token]);
+    var authFlag = true;
+    auth().onAuthStateChanged(res => {
+      if (res && authFlag) {
+        console.log('Firebase - onAuthStateChanged', {res});
+        authFlag = false;
+        Storage.getData(UserId)
+          .then(res => {
+            if (res) {
+              let mData = JSON.parse(res);
+              setShowLogin(false);
+              getData(mData?.uid);
+            }
+          })
+          .catch(Error => {
+            console.log('-----Error--->', Error);
+          });
+      } else if (!res) {
+        setShowLogin(true);
+      }
+    });
+  }, []);
 
   const getData = (uid: any) => {
     setShowLoader(true);
