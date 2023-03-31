@@ -6,8 +6,8 @@ admin.initializeApp();
 // // https://firebase.google.com/docs/functions/get-started
 //
 exports.scheduledFunction = functions.pubsub
-  .schedule('every 6 hours')
-  // .schedule('every 1 minutes')
+  .schedule('every 4 hours')
+  // .schedule('every 5 minutes')
   .onRun(context => {
     console.log('This will be run every 4 hours!');
     admin
@@ -26,9 +26,6 @@ exports.scheduledFunction = functions.pubsub
           const expiryTime = new Date(timestemp).valueOf();
           if (currentTime >= expiryTime) {
             console.log('---token-------->', newData[index].token);
-          } else {
-            console.log('--Schedule-Job--inside--else---->', 2);
-            console.log('not expired');
             const payload = {
               token: newData[index].token,
               notification: {
@@ -50,11 +47,28 @@ exports.scheduledFunction = functions.pubsub
               .catch(error => {
                 return {error: error.code};
               });
+          } else {
+            console.log('--Schedule-Job--inside--else---->', 2);
+            console.log('not expired');
           }
         }
       });
     return 'hello';
   });
+
+// Karan Cloud Function for Practice
+{
+  /*Cloud Function get details of all the users from DB*/
+}
+
+exports.AllUserDetails = functions.https.onRequest((req, res) => {
+  admin
+    .firestore()
+    .collection('Users')
+    .onSnapshot(snapshot => {
+      console.log('snapshot--->', snapshot);
+    });
+});
 
 // exports.Check = functions.pubsub.schedule('every 5 minutes').onRun(context => {
 //   console.log('This will be run every 5 minutes!');

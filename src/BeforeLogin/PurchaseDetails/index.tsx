@@ -56,7 +56,7 @@ const Purchase = () => {
           setQuantity(mRes?.bottle?.toString());
           setDose(mRes?.dose?.toString());
         } else {
-          setShowLogin(true);
+          // setShowLogin(true);
         }
         setShowLoader(false);
         if (mRes?.bottle) {
@@ -187,6 +187,10 @@ const Purchase = () => {
             })
             .then(res => {
               setShowLoader(false);
+              Toast.show({
+                type: 'success',
+                text1: 'Details submit successfully',
+              });
               navigation.dispatch(
                 CommonActions.reset({
                   index: 0,
@@ -222,7 +226,7 @@ const Purchase = () => {
               <Label title={'Please enter Email'} />
               <EditText
                 Style={styles.editText}
-                PlaceHolder="Please enter emai"
+                PlaceHolder="Please enter email"
                 Value={email}
                 OnChangeText={txt => setEmail(txt.trim())}
                 KeyboradType={'default'}

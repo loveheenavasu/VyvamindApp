@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import {View, Switch, TouchableOpacity} from 'react-native';
+import {View, Switch, TouchableOpacity, Platform} from 'react-native';
 import PushNotification from 'react-native-push-notification';
 import {Picker} from '@react-native-picker/picker';
 import DatePicker from 'react-native-date-picker';
@@ -9,6 +9,7 @@ import * as Storage from '../../Service/Storage';
 import Toast from 'react-native-toast-message';
 import Label from '../../CommonComponnet/Label';
 import {useNavigation} from '@react-navigation/native';
+import {verticalScale} from 'react-native-size-matters';
 
 const DosageReminderScreen = () => {
   const navigation = useNavigation();
@@ -103,42 +104,11 @@ const DosageReminderScreen = () => {
   return (
     <View style={styles.container}>
       <Label styles={styles.header} title={'Dosage Reminder Settings'} />
-      <View style={styles.option}>
-        <Label style={styles.label} title={'Enable Dosage Reminder:'} />
-        <View style={styles.switch_Con}>
-          <Switch
-            trackColor={{false: '#767577', true: '#81b0ff'}}
-            thumbColor={isEnabled ? '#f5dd4b' : '#f4f3f4'}
-            ios_backgroundColor="#3e3e3e"
-            onValueChange={handleToggleSwitch}
-            value={isEnabled}
-          />
-        </View>
-      </View>
-      <View style={styles.option}>
-        <Label title={'Reminder Frequency:'} style={styles.label} />
-        <Picker
-          selectedValue={frequency}
-          onValueChange={handleFrequencyChange}
-          style={styles.picker}>
-          <Picker.Item
-            style={styles.picker_Label}
-            label="Daily"
-            value="daily"
-          />
-          <Picker.Item
-            style={styles.picker_Label}
-            label="Weekly"
-            value="weekly"
-          />
-          <Picker.Item
-            style={styles.picker_Label}
-            label="Monthly"
-            value="monthly"
-          />
-        </Picker>
-      </View>
-      <View style={styles.option}>
+      <View
+        style={[
+          styles.option,
+          {marginBottom: Platform.OS === 'ios' ? 0 : verticalScale(40)},
+        ]}>
         <Label styles={styles.label} title={'Reminder Time'} />
         <View style={styles.time_Con}>
           <TouchableOpacity onPress={() => setOpen(true)} style={{padding: 5}}>
@@ -166,6 +136,42 @@ const DosageReminderScreen = () => {
             onCancel={() => {
               setOpen(false);
             }}
+          />
+        </View>
+      </View>
+      <View style={[styles.option]}>
+        <Label title={'Reminder Frequency:'} style={styles.label} />
+        <Picker
+          selectedValue={frequency}
+          onValueChange={handleFrequencyChange}
+          style={styles.picker}>
+          <Picker.Item
+            style={styles.picker_Label}
+            label="Daily"
+            value="daily"
+          />
+          <Picker.Item
+            style={styles.picker_Label}
+            label="Weekly"
+            value="weekly"
+          />
+          <Picker.Item
+            style={styles.picker_Label}
+            label="Monthly"
+            value="monthly"
+          />
+        </Picker>
+      </View>
+
+      <View style={[styles.option, {marginTop: verticalScale(30)}]}>
+        <Label style={styles.label} title={'Enable Dosage Reminder:'} />
+        <View style={styles.switch_Con}>
+          <Switch
+            trackColor={{false: '#767577', true: '#81b0ff'}}
+            thumbColor={isEnabled ? '#f5dd4b' : '#f4f3f4'}
+            ios_backgroundColor="#3e3e3e"
+            onValueChange={handleToggleSwitch}
+            value={isEnabled}
           />
         </View>
       </View>
