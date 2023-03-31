@@ -52,8 +52,12 @@ const Purchase = () => {
       .doc(uid)
       .onSnapshot(documentSnapshot => {
         let mRes = documentSnapshot?.data();
-        setQuantity(mRes?.bottle?.toString());
-        setDose(mRes?.dose?.toString());
+        if (mRes) {
+          setQuantity(mRes?.bottle?.toString());
+          setDose(mRes?.dose?.toString());
+        } else {
+          setShowLogin(true);
+        }
         setShowLoader(false);
         if (mRes?.bottle) {
           navigation.dispatch(

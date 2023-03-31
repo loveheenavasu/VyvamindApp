@@ -1,5 +1,5 @@
 import {StyleSheet} from 'react-native';
-import {scale} from 'react-native-size-matters';
+import {scale, verticalScale} from 'react-native-size-matters';
 
 const styles = StyleSheet.create({
   container: {
@@ -25,6 +25,7 @@ const styles = StyleSheet.create({
   },
   picker: {
     flex: 1,
+    marginLeft: scale(40),
   },
   timePicker: {
     fontSize: 18,
@@ -48,6 +49,21 @@ const styles = StyleSheet.create({
   time_Label: {
     fontSize: scale(14),
     color: '#000',
+  },
+  btn_Con: {
+    height: verticalScale(40),
+    borderRadius: scale(10),
+    backgroundColor: '#40B5AD',
+    justifyContent: 'center',
+    alignItems: 'center',
+    alignSelf: 'center',
+    marginTop: verticalScale(50),
+  },
+  btn_Label: {
+    color: '#FFF',
+    fontWeight: 'bold',
+    fontSize: scale(12),
+    paddingHorizontal: scale(10),
   },
 });
 

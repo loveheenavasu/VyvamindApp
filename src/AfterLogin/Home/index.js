@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import {View, Text, Switch, TouchableOpacity} from 'react-native';
+import {View, Switch, TouchableOpacity} from 'react-native';
 import PushNotification from 'react-native-push-notification';
 import {Picker} from '@react-native-picker/picker';
 import DatePicker from 'react-native-date-picker';
@@ -7,9 +7,11 @@ import Notifications from '../../Util/Notification';
 import styles from './styles';
 import * as Storage from '../../Service/Storage';
 import Toast from 'react-native-toast-message';
-import {firebase} from '@react-native-firebase/functions';
+import Label from '../../CommonComponnet/Label';
+import {useNavigation} from '@react-navigation/native';
 
 const DosageReminderScreen = () => {
+  const navigation = useNavigation();
   const [isEnabled, setIsEnabled] = useState(false);
   const [frequency, setFrequency] = useState('daily');
   const [reminderTime, setReminderTime] = useState(new Date().toLocaleString());
@@ -20,11 +22,12 @@ const DosageReminderScreen = () => {
   useEffect(() => {
     Storage.getData('ISENABLE')
       .then(res => {
-        console.log('------res---->', res);
-        if (res) {
+        let mData = JSON.parse(res);
+        if (mData?.selectedTime) {
+          setSelectedTime(mData?.selectedTime);
           setIsEnabled(true);
-          let mJSONValue = JSON.parse(res);
-          console.log('---isEnabled---->', mJSONValue?.isEnabled);
+        } else {
+          console.log('----inside-else-->', 1234);
         }
       })
       .catch(Error => {
@@ -43,12 +46,12 @@ const DosageReminderScreen = () => {
       scheduleReminder();
     } else {
       cancelReminder();
+      Storage.storeData('ISENABLE', '');
     }
   }, [isEnabled, frequency, reminderTime]);
 
   const handleToggleSwitch = () => {
     if (!selectedTime) {
-      // success, error, info
       Toast.show({
         type: 'error',
         text1: 'Please select Reminder Time first',
@@ -99,9 +102,9 @@ const DosageReminderScreen = () => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.header}>Dosage Reminder Settings</Text>
+      <Label styles={styles.header} title={'Dosage Reminder Settings'} />
       <View style={styles.option}>
-        <Text style={styles.label}>Enable Dosage Reminder:</Text>
+        <Label style={styles.label} title={'Enable Dosage Reminder:'} />
         <View style={styles.switch_Con}>
           <Switch
             trackColor={{false: '#767577', true: '#81b0ff'}}
@@ -113,7 +116,7 @@ const DosageReminderScreen = () => {
         </View>
       </View>
       <View style={styles.option}>
-        <Text style={styles.label}>Reminder Frequency:</Text>
+        <Label title={'Reminder Frequency:'} style={styles.label} />
         <Picker
           selectedValue={frequency}
           onValueChange={handleFrequencyChange}
@@ -136,14 +139,17 @@ const DosageReminderScreen = () => {
         </Picker>
       </View>
       <View style={styles.option}>
-        <Text style={styles.label}>Reminder Time</Text>
+        <Label styles={styles.label} title={'Reminder Time'} />
         <View style={styles.time_Con}>
           <TouchableOpacity onPress={() => setOpen(true)} style={{padding: 5}}>
-            <Text style={styles.time_Label}>
-              {selectedTime
-                ? new Date(date).toLocaleTimeString()
-                : 'Select Time'}{' '}
-            </Text>
+            <Label
+              styles={styles.time_Label}
+              title={
+                selectedTime
+                  ? new Date(date).toLocaleTimeString()
+                  : 'Select Time'
+              }
+            />
           </TouchableOpacity>
           <DatePicker
             mode="time"
@@ -163,6 +169,11 @@ const DosageReminderScreen = () => {
           />
         </View>
       </View>
+      <TouchableOpacity
+        style={styles.btn_Con}
+        onPress={() => navigation.navigate('EditProduct')}>
+        <Label styles={styles.btn_Label} title={'Edit  Dose Details'} />
+      </TouchableOpacity>
     </View>
   );
 };
