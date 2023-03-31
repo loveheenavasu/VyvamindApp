@@ -1,5 +1,5 @@
-import {StyleSheet} from 'react-native';
-import {scale, verticalScale} from 'react-native-size-matters';
+import { StyleSheet } from 'react-native';
+import { scale, verticalScale } from 'react-native-size-matters';
 
 const styles = StyleSheet.create({
   main: {
@@ -49,10 +49,12 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     marginTop: verticalScale(40),
   },
-  questionMark:{
-    color:'#40B5AD',
-    fontSize:scale(10),
-  }
+  questionMark: {
+    color: '#40B5AD',
+    fontSize: scale(10),
+  },
+
+
 });
 
 export default styles;

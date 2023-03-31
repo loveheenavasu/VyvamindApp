@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   View,
   TouchableOpacity,
@@ -10,14 +10,14 @@ import {
 } from 'react-native';
 import Header from '../../CommonComponnet/Header';
 import FastImage from 'react-native-fast-image';
-import {SplashIcon} from '../../Util/image';
+import { SplashIcon } from '../../Util/image';
 import Label from '../../CommonComponnet/Label';
 import EditText from '../../CommonComponnet/EditText';
 import * as Storage from '../../Service/Storage';
-import {UserId} from '../../Util/StorageKey';
+import { UserId } from '../../Util/StorageKey';
 import firestore from '@react-native-firebase/firestore';
 import Loader from '../../CommonComponnet/Loader';
-import {Toast} from 'react-native-toast-message/lib/src/Toast';
+import { Toast } from 'react-native-toast-message/lib/src/Toast';
 import styles from './styles';
 
 const EditProduct = () => {
@@ -102,10 +102,12 @@ const EditProduct = () => {
   return (
     <KeyboardAvoidingView
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-      style={{flex: 1, backgroundColor: '#FFF'}}>
+      style={{ flex: 1, backgroundColor: '#FFF' }}>
       {showLoader && <Loader />}
-      <Header title="Edit dose details" />
-      <ScrollView style={{flex: 1}} keyboardShouldPersistTaps="handled">
+      <Header title="Edit dose details"
+        showBtn
+      />
+      <ScrollView style={{ flex: 1 }} keyboardShouldPersistTaps="handled">
         <View style={styles.main}>
           <FastImage
             style={styles.logo}
@@ -119,9 +121,9 @@ const EditProduct = () => {
                 styles={styles.select_Qunatity_Label}
                 title="Please enter Quantity"
               />
-               <Text style={styles.questionMark}>
-                    *No of Bottles, each bottle has 60 Tablets
-                  </Text>
+              <Text style={styles.questionMark}>
+                *No of Bottles, each bottle has 60 Tablets
+              </Text>
             </View>
             <View style={styles.drop_Con}>
               <EditText
@@ -139,9 +141,9 @@ const EditProduct = () => {
                 styles={styles.select_Qunatity_Label}
                 title="Please enter Dose"
               />
-                <Text style={styles.questionMark}>
-                   *No of dose consumed per day
-                   </Text>
+              <Text style={styles.questionMark}>
+                *No of dose consumed per day
+              </Text>
             </View>
             <View style={styles.drop_Con}>
               <EditText
@@ -158,12 +160,13 @@ const EditProduct = () => {
             style={styles.submit_Button}
             onPress={() => submitQuantity()}>
             <Label
-              styles={{color: '#FFF', fontWeight: 'bold'}}
+              styles={{ color: '#FFF', fontWeight: 'bold' }}
               title={'Update'}
             />
           </TouchableOpacity>
         </View>
       </ScrollView>
+
     </KeyboardAvoidingView>
   );
 };
