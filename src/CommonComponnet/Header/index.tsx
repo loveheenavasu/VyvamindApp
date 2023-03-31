@@ -1,6 +1,6 @@
 import {useNavigation} from '@react-navigation/native';
 import React from 'react';
-import {View, Text, TouchableOpacity, StyleSheet} from 'react-native';
+import {View, TouchableOpacity, StyleSheet} from 'react-native';
 import {scale} from 'react-native-size-matters';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import Label from '../Label';
@@ -20,7 +20,7 @@ const Header = (props: Props) => {
         <AntDesign name="arrowleft" size={scale(16)} color={'#000'} />
       </TouchableOpacity>
       <View style={styles.s_Child}>
-        <Label styles={{fontWeight: 'normal'}} title={title} />
+        <Label styles={{fontWeight: '500'}} title={title} />
       </View>
     </View>
   );

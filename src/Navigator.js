@@ -1,14 +1,14 @@
-import React, {useEffect, useState} from 'react';
+import React from 'react';
 import PurchaseDetails from './BeforeLogin/PurchaseDetails';
 import HomePage from './AfterLogin/Home';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import NavigationService from './Service/NavigationService';
 import {SafeAreaView, View} from 'react-native';
-import * as Storage from './Service/Storage';
-import {UserId} from './Util/StorageKey';
 import Footer from './CommonComponnet/Footer';
 import Faq from './StaticPage/Faq';
+import EditProduct from './AfterLogin/EditProductDetails';
+import {StyleSheet} from 'react-native';
 
 const HomeStack = createNativeStackNavigator();
 const LoginStack = createNativeStackNavigator();
@@ -20,8 +20,9 @@ const AfterLoginStack = () => {
         screenOptions={{
           headerShown: false,
         }}>
-        <HomeStack.Screen component={HomePage} name={'HomePage'} />
+        <HomeStack.Screen name={'HomePage'} component={HomePage} />
         <LoginStack.Screen name="Faq" component={Faq} />
+        <LoginStack.Screen name="EditProduct" component={EditProduct} />
       </HomeStack.Navigator>
     </NavigationContainer>
   );
@@ -47,33 +48,25 @@ const BeforeLoginStack = () => {
 };
 
 const Navigator = () => {
-  const [userId, setUserId] = useState('');
-
-  useEffect(() => {
-    Storage.getData(UserId)
-      .then(res => {
-        if (res) {
-          // console.log('----res---->', res);
-        } else {
-          console.log('----res--else-->', res);
-        }
-      })
-      .catch(Error => {
-        console.log('----Error---->', Error);
-      });
-  }, []);
-
   return (
     <>
       <SafeAreaView style={{flex: 0, backgroundColor: '#FFF'}} />
       <SafeAreaView style={{flex: 1, backgroundColor: '#000'}}>
-        <View style={{width: '100%', height: '100%', backgroundColor: '#FFF'}}>
-          {userId ? <AfterLoginStack /> : <BeforeLoginStack />}
+        <View style={styles.main}>
+          <BeforeLoginStack />
           <Footer />
         </View>
       </SafeAreaView>
     </>
   );
 };
+
+const styles = StyleSheet.create({
+  main: {
+    width: '100%',
+    height: '100%',
+    backgroundColor: '#FFF',
+  },
+});
 
 export default Navigator;

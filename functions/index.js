@@ -7,7 +7,7 @@ admin.initializeApp();
 //
 exports.scheduledFunction = functions.pubsub
   .schedule('every 6 hours')
-  // .schedule('every 5 minutes')
+  // .schedule('every 1 minutes')
   .onRun(context => {
     console.log('This will be run every 4 hours!');
     admin

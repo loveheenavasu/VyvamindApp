@@ -1,11 +1,12 @@
 import React, {useState, useEffect, useRef} from 'react';
-import {View, Text, StyleSheet} from 'react-native';
+import {View, StyleSheet} from 'react-native';
 import SplashScreen from './src/BeforeLogin/Splash';
 import Toast from 'react-native-toast-message';
 import Navigator from './src/Navigator';
 import messaging from '@react-native-firebase/messaging';
 import NotificationPopup from 'react-native-push-notification-popup';
 import {scale} from 'react-native-size-matters';
+import Label from './src/CommonComponnet/Label';
 
 const App = () => {
   const [showSplash, setShowSplash] = useState(true);
@@ -32,16 +33,13 @@ const App = () => {
   }, []);
 
   // Render function
-  const renderCustomPopup = ({
-    title,
-    body,
-  }) => (
+  const renderCustomPopup = ({title, body}) => (
     <View style={styles.main}>
       <View style={styles.noti_Title_Con}>
-        <Text style={styles.app_Title_Label}>{title}</Text>
-        <Text style={styles.now_Label}>Now</Text>
+        <Label styles={styles.app_Title_Label} title={title} />
+        <Label styles={styles.now_Label} title={'Now'} />
       </View>
-      <Text style={styles.body_Label}>{body}</Text>
+      <Label styles={styles.body_Label} title={body} />
     </View>
   );
 
