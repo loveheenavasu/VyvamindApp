@@ -18,6 +18,7 @@ const styles = StyleSheet.create({
       width: '55%',
       height: '100%',
       justifyContent: 'center',
+     
     },
     drop_Con: {
       width: '45%',
@@ -48,7 +49,7 @@ const styles = StyleSheet.create({
       justifyContent: 'center',
       alignItems: 'center',
       alignSelf: 'center',
-      marginTop: verticalScale(10),
+      marginTop: verticalScale(40),
     },
     qunatity_Edit: {
       width: '100%',
@@ -58,6 +59,10 @@ const styles = StyleSheet.create({
       borderColor: 'grey',
       paddingHorizontal: scale(10),
     },
+    questionMark:{
+      color:'#40B5AD',
+      fontSize:scale(10),
+    }
   });
 
   export default styles;

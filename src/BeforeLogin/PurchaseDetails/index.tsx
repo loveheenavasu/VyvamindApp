@@ -6,6 +6,7 @@ import {
   Platform,
   ScrollView,
   Keyboard,
+  Text,
 } from 'react-native';
 import Label from '../../CommonComponnet/Label';
 import FastImage from 'react-native-fast-image';
@@ -224,6 +225,9 @@ const Purchase = () => {
           {showLogin ? (
             <View style={{width: '100%'}}>
               <Label title={'Please enter Email'} />
+              <Text style={styles.questionMark}>
+                *Enter any Valid email id, No need for Registration
+              </Text>
               <EditText
                 Style={styles.editText}
                 PlaceHolder="Please enter email"
@@ -250,6 +254,9 @@ const Purchase = () => {
                     styles={styles.select_Qunatity_Label}
                     title="Please enter Quantity"
                   />
+                  <Text style={styles.questionMark}>
+                    *No of Bottles, each bottle has 60 Tablets
+                  </Text>
                 </View>
                 <View style={styles.drop_Con}>
                   <EditText
@@ -261,6 +268,7 @@ const Purchase = () => {
                       setQuantity(txt.replace(/[^0-9]/g, ''))
                     }
                   />
+                  
                 </View>
               </View>
               <View style={styles.first_Row}>
@@ -269,6 +277,9 @@ const Purchase = () => {
                     styles={styles.select_Qunatity_Label}
                     title="Please enter Dose"
                   />
+                   <Text style={styles.questionMark}>
+                   *No of dose consumed per day
+                   </Text>
                 </View>
                 <View style={styles.drop_Con}>
                   <EditText

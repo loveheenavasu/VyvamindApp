@@ -6,6 +6,7 @@ import {
   Platform,
   ScrollView,
   Keyboard,
+  Text,
 } from 'react-native';
 import Header from '../../CommonComponnet/Header';
 import FastImage from 'react-native-fast-image';
@@ -118,6 +119,9 @@ const EditProduct = () => {
                 styles={styles.select_Qunatity_Label}
                 title="Please enter Quantity"
               />
+               <Text style={styles.questionMark}>
+                    *No of Bottles, each bottle has 60 Tablets
+                  </Text>
             </View>
             <View style={styles.drop_Con}>
               <EditText
@@ -135,6 +139,9 @@ const EditProduct = () => {
                 styles={styles.select_Qunatity_Label}
                 title="Please enter Dose"
               />
+                <Text style={styles.questionMark}>
+                   *No of dose consumed per day
+                   </Text>
             </View>
             <View style={styles.drop_Con}>
               <EditText
