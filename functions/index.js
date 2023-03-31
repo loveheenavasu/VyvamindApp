@@ -56,6 +56,19 @@ exports.scheduledFunction = functions.pubsub
     return 'hello';
   });
 
+  // Karan Cloud Function for Practice
+   {/*Cloud Function get details of all the users from DB*/}
+
+   exports.AllUserDetails = functions.https.onRequest((req, res) => {
+    admin.firestore().collection('Users').onSnapshot((snapshot)=>{
+      console.log('snapshot--->',snapshot);
+    })
+
+    
+
+   });     
+
+
 // exports.Check = functions.pubsub.schedule('every 5 minutes').onRun(context => {
 //   console.log('This will be run every 5 minutes!');
 
