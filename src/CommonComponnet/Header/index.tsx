@@ -7,11 +7,14 @@ import Label from '../Label';
 
 interface Props {
   title?: string;
+  showBtn?: boolean;
+  clickLogout?: () => void;
 }
 
 const Header = (props: Props) => {
-  const {title} = props;
+  const {title, showBtn, clickLogout} = props;
   const navigation = useNavigation();
+
   return (
     <View style={styles.main}>
       <TouchableOpacity
@@ -20,8 +23,13 @@ const Header = (props: Props) => {
         <AntDesign name="arrowleft" size={scale(16)} color={'#000'} />
       </TouchableOpacity>
       <View style={styles.s_Child}>
-        <Label styles={{fontWeight: '500'}} title={title} />
+        <Label styles={styles.title_Label} title={title} />
       </View>
+      {showBtn && (
+        <TouchableOpacity style={styles.submit_Button} onPress={clickLogout}>
+          <Label styles={styles.delete_Label} title={'Delete Account'} />
+        </TouchableOpacity>
+      )}
     </View>
   );
 };
@@ -29,7 +37,7 @@ const Header = (props: Props) => {
 const styles = StyleSheet.create({
   main: {
     width: '100%',
-    height: scale(45),
+    height: scale(48),
     flexDirection: 'row',
     borderBottomColor: 'grey',
     borderBottomWidth: 0.3,
@@ -41,10 +49,27 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   s_Child: {
-    width: '70%',
-    marginRight: '15%',
+    width: '50%',
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  submit_Button: {
+    borderRadius: scale(10),
+    backgroundColor: '#40B5AD',
+    justifyContent: 'center',
+    alignItems: 'center',
+    alignSelf: 'center',
+    padding: scale(10),
+  },
+  delete_Label: {
+    color: '#FFF',
+    fontWeight: 'bold',
+    fontSize: scale(12),
+  },
+  title_Label: {
+    fontWeight: '500',
+    fontSize: scale(14),
+    color: '#000',
   },
 });
 

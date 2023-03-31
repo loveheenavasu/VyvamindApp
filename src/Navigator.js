@@ -23,6 +23,7 @@ const AfterLoginStack = () => {
         <HomeStack.Screen name={'HomePage'} component={HomePage} />
         <LoginStack.Screen name="Faq" component={Faq} />
         <LoginStack.Screen name="EditProduct" component={EditProduct} />
+        <LoginStack.Screen name="BeforeLoginStack" component={BeforeLoginStack} />
       </HomeStack.Navigator>
     </NavigationContainer>
   );

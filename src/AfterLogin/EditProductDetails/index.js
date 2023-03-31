@@ -6,6 +6,7 @@ import {
   Platform,
   ScrollView,
   Keyboard,
+  Alert,
 } from 'react-native';
 import Header from '../../CommonComponnet/Header';
 import FastImage from 'react-native-fast-image';
@@ -18,8 +19,11 @@ import firestore from '@react-native-firebase/firestore';
 import Loader from '../../CommonComponnet/Loader';
 import {Toast} from 'react-native-toast-message/lib/src/Toast';
 import styles from './styles';
+import auth from '@react-native-firebase/auth';
+import {CommonActions, useNavigation} from '@react-navigation/native';
 
 const EditProduct = () => {
+  const navigation = useNavigation();
   const [quantity, setQuantity] = useState('');
   const [dose, setDose] = useState('');
   const [showLoader, setShowLoader] = useState(false);
@@ -98,12 +102,47 @@ const EditProduct = () => {
     }
   };
 
+  const _logout = () =>
+    Alert.alert('', 'Are you Sure you want to delete Account?', [
+      {
+        text: 'Cancel',
+        onPress: () => console.log('Cancel Pressed'),
+        style: 'cancel',
+      },
+      {
+        text: 'OK',
+        onPress: () => {
+          setShowLoader(true);
+          let user = auth().currentUser;
+          user
+            .delete()
+            .then(() => {
+              Toast.show({
+                type: 'success',
+                text1: 'Your account has been deleted successfully',
+              });
+              setShowLoader(false);
+              navigation.dispatch(
+                CommonActions.reset({
+                  index: 0,
+                  routes: [{name: 'BeforeLoginStack'}],
+                }),
+              );
+            })
+            .catch(error => {
+              console.log('-----error--->', error);
+              setShowLoader(false);
+            });
+        },
+      },
+    ]);
+
   return (
     <KeyboardAvoidingView
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
       style={{flex: 1, backgroundColor: '#FFF'}}>
       {showLoader && <Loader />}
-      <Header title="Edit dose details" />
+      <Header title="Edit dose details" showBtn clickLogout={() => _logout()} />
       <ScrollView style={{flex: 1}} keyboardShouldPersistTaps="handled">
         <View style={styles.main}>
           <FastImage
