@@ -118,6 +118,10 @@ const EditProduct = () => {
                 styles={styles.select_Qunatity_Label}
                 title="Please enter Quantity"
               />
+              <Label
+                styles={styles.questionMark}
+                title={'*No of Bottles, each bottle has 60 Tablets'}
+              />
             </View>
             <View style={styles.drop_Con}>
               <EditText
@@ -134,6 +138,10 @@ const EditProduct = () => {
               <Label
                 styles={styles.select_Qunatity_Label}
                 title="Please enter Dose"
+              />
+              <Label
+                styles={styles.questionMark}
+                title={'*No of dose consumed per day'}
               />
             </View>
             <View style={styles.drop_Con}>

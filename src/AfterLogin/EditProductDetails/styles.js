@@ -49,6 +49,10 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     marginTop: verticalScale(40),
   },
+  questionMark:{
+    color:'#40B5AD',
+    fontSize:scale(10),
+  }
 });
 
 export default styles;

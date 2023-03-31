@@ -22,6 +22,7 @@ import * as Storage from '../../Service/Storage';
 import {UserId} from '../../Util/StorageKey';
 import firestore from '@react-native-firebase/firestore';
 import messaging from '@react-native-firebase/messaging';
+
 const Purchase = () => {
   const navigation = useNavigation<any>();
   const [quantity, setQuantity] = useState<string>('');
@@ -64,8 +65,6 @@ const Purchase = () => {
         if (mRes) {
           setQuantity(mRes?.bottle?.toString());
           setDose(mRes?.dose?.toString());
-        } else {
-          // setShowLogin(true);
         }
         setShowLoader(false);
         if (mRes?.bottle) {
@@ -233,6 +232,10 @@ const Purchase = () => {
           {showLogin ? (
             <View style={{width: '100%'}}>
               <Label title={'Please enter Email'} />
+              <Label
+                styles={styles.questionMark}
+                title={'*Enter any Valid email id, No need for Registration'}
+              />
               <EditText
                 Style={styles.editText}
                 PlaceHolder="Please enter email"
@@ -259,6 +262,10 @@ const Purchase = () => {
                     styles={styles.select_Qunatity_Label}
                     title="Please enter Quantity"
                   />
+                  <Label
+                    styles={styles.questionMark}
+                    title={'*No of Bottles, each bottle has 60 Tablets'}
+                  />
                 </View>
                 <View style={styles.drop_Con}>
                   <EditText
@@ -277,6 +284,10 @@ const Purchase = () => {
                   <Label
                     styles={styles.select_Qunatity_Label}
                     title="Please enter Dose"
+                  />
+                  <Label
+                    styles={styles.questionMark}
+                    title={'*No of dose consumed per day'}
                   />
                 </View>
                 <View style={styles.drop_Con}>
