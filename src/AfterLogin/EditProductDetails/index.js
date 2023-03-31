@@ -111,50 +111,50 @@ const EditProduct = () => {
             source={SplashIcon}
             resizeMode={FastImage.resizeMode.contain}
           />
-          <>
-            <View style={styles.first_Row}>
-              <View style={[styles.select_Qun_Con]}>
-                <Label
-                  styles={styles.select_Qunatity_Label}
-                  title="Please enter Quantity"
-                />
-              </View>
-              <View style={styles.drop_Con}>
-                <EditText
-                  Style={styles.qunatity_Edit}
-                  KeyboradType={'numeric'}
-                  PlaceHolder={'Please enter quantity'}
-                  Value={quantity}
-                  OnChangeText={txt => setQuantity(txt.replace(/[^0-9]/g, ''))}
-                />
-              </View>
-            </View>
-            <View style={styles.first_Row}>
-              <View style={styles.select_Qun_Con}>
-                <Label
-                  styles={styles.select_Qunatity_Label}
-                  title="Please enter Dose"
-                />
-              </View>
-              <View style={styles.drop_Con}>
-                <EditText
-                  Style={styles.qunatity_Edit}
-                  KeyboradType={'numeric'}
-                  PlaceHolder={'Please enter Dose'}
-                  Value={dose}
-                  OnChangeText={txt => setDose(txt.replace(/[^0-9]/g, ''))}
-                />
-              </View>
-            </View>
-            <TouchableOpacity
-              style={styles.submit_Button}
-              onPress={() => submitQuantity()}>
+
+          <View style={styles.first_Row}>
+            <View style={[styles.select_Qun_Con]}>
               <Label
-                styles={{color: '#FFF', fontWeight: 'bold'}}
-                title={'Update'}
+                styles={styles.select_Qunatity_Label}
+                title="Please enter Quantity"
               />
-            </TouchableOpacity>
-          </>
+            </View>
+            <View style={styles.drop_Con}>
+              <EditText
+                Style={styles.qunatity_Edit}
+                KeyboradType={'numeric'}
+                PlaceHolder={'Please enter quantity'}
+                Value={quantity}
+                OnChangeText={txt => setQuantity(txt.replace(/[^0-9]/g, ''))}
+              />
+            </View>
+          </View>
+          <View style={styles.first_Row}>
+            <View style={styles.select_Qun_Con}>
+              <Label
+                styles={styles.select_Qunatity_Label}
+                title="Please enter Dose"
+              />
+            </View>
+            <View style={styles.drop_Con}>
+              <EditText
+                Style={styles.qunatity_Edit}
+                KeyboradType={'numeric'}
+                PlaceHolder={'Please enter Dose'}
+                Value={dose}
+                OnChangeText={txt => setDose(txt.replace(/[^0-9]/g, ''))}
+                OnSubmit={() => Keyboard.dismiss()}
+              />
+            </View>
+          </View>
+          <TouchableOpacity
+            style={styles.submit_Button}
+            onPress={() => submitQuantity()}>
+            <Label
+              styles={{color: '#FFF', fontWeight: 'bold'}}
+              title={'Update'}
+            />
+          </TouchableOpacity>
         </View>
       </ScrollView>
     </KeyboardAvoidingView>

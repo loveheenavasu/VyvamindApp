@@ -60,12 +60,31 @@ const Purchase = () => {
         }
         setShowLoader(false);
         if (mRes?.bottle) {
-          navigation.dispatch(
-            CommonActions.reset({
-              index: 0,
-              routes: [{name: 'AfterLoginStack'}],
-            }),
-          );
+          if (token) {
+            firestore()
+              .collection('Users')
+              .doc(uid)
+              .update({token: token})
+              .then(res => {
+                console.log('----token-update--res-->', res);
+                navigation.dispatch(
+                  CommonActions.reset({
+                    index: 0,
+                    routes: [{name: 'AfterLoginStack'}],
+                  }),
+                );
+              })
+              .catch(Error => {
+                console.log('-token-update--Error----->', Error);
+              });
+          } else {
+            navigation.dispatch(
+              CommonActions.reset({
+                index: 0,
+                routes: [{name: 'AfterLoginStack'}],
+              }),
+            );
+          }
         }
       });
   };
