@@ -3,9 +3,9 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>355523878762-moh49cl8avrq5d96pep54tn0uf4kuf4s.apps.googleusercontent.com</string>
+	<string>355523878762-4dal1k3akpuk0v0hk4dcgmqhflg3dhpj.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.355523878762-moh49cl8avrq5d96pep54tn0uf4kuf4s</string>
+	<string>com.googleusercontent.apps.355523878762-4dal1k3akpuk0v0hk4dcgmqhflg3dhpj</string>
 	<key>API_KEY</key>
 	<string>AIzaSyAqYGW4G_GbQQZpbUAh5Bwo0syIqsB4VUU</string>
 	<key>GCM_SENDER_ID</key>
@@ -13,7 +13,7 @@
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.Vyvamind</string>
+	<string>com.Vyvamind23</string>
 	<key>PROJECT_ID</key>
 	<string>vyvamind-83475</string>
 	<key>STORAGE_BUCKET</key>
@@ -29,6 +29,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:355523878762:ios:2bea6a5c1c7c7b6b960f13</string>
+	<string>1:355523878762:ios:7e1207cf70c77852960f13</string>
 </dict>
 </plist>

@@ -10,12 +10,13 @@ import Toast from 'react-native-toast-message';
 import Label from '../../CommonComponnet/Label';
 import {useNavigation} from '@react-navigation/native';
 import {verticalScale} from 'react-native-size-matters';
+import PushNotificationIOS from '@react-native-community/push-notification-ios';
 
 const DosageReminderScreen = () => {
   const navigation = useNavigation();
   const [isEnabled, setIsEnabled] = useState(false);
   const [frequency, setFrequency] = useState('daily');
-  const [reminderTime, setReminderTime] = useState(new Date().toLocaleString());
+  const [reminderTime, setReminderTime] = useState();
   const [date, setDate] = useState(new Date());
   const [open, setOpen] = useState(false);
   const [selectedTime, setSelectedTime] = useState('');
@@ -25,7 +26,10 @@ const DosageReminderScreen = () => {
       .then(res => {
         let mData = JSON.parse(res);
         if (mData?.selectedTime) {
+          setFrequency(mData?.frequency);
+          setDate(new Date(mData?.selectedTime));
           setSelectedTime(mData?.selectedTime);
+          setReminderTime(new Date(mData?.selectedTime).toLocaleString());
           setIsEnabled(true);
         } else {
           console.log('----inside-else-->', 1234);
@@ -93,7 +97,25 @@ const DosageReminderScreen = () => {
       await PushNotification.cancelAllLocalNotifications();
       Notifications.schduleNotification(reminderOptions);
     } else {
-      PushNotification.localNotificationSchedule(reminderOptions);
+      PushNotificationIOS.addNotificationRequest({
+        id: '122',
+        title: 'Vyvamind Dosage Reminder',
+        body: 'It is time to take your Vyvamind capsule!',
+        fireDate: new Date(selectedTime),
+        repeats: true,
+        repeatsComponent: {
+          hour: true,
+          minute: true,
+        },
+        isSilent: false,
+        repeatInterval:
+          frequency === 'daily'
+            ? 'day'
+            : frequency === 'weekly'
+            ? 'week'
+            : 'month',
+      });
+      PushNotificationIOS.addNotificationRequest;
     }
   };
 
