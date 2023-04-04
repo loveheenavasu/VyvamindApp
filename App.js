@@ -7,9 +7,12 @@ import messaging from '@react-native-firebase/messaging';
 import NotificationPopup from 'react-native-push-notification-popup';
 import {scale} from 'react-native-size-matters';
 import Label from './src/CommonComponnet/Label';
+import NetInfo from '@react-native-community/netinfo';
+import NoInternet from './src/CommonComponnet/NoInternet';
 
 const App = () => {
   const [showSplash, setShowSplash] = useState(true);
+  const [isNetAvailable, setNet] = useState(true);
   const popRef = useRef();
 
   useEffect(() => {
@@ -17,6 +20,23 @@ const App = () => {
       setShowSplash(false);
     }, 1700);
   }, []);
+
+  const onNetworkStateChange = newState => {
+    setNet(newState.isConnected);
+  };
+
+  const checkNetwork = () => {
+    NetInfo.fetch().then(state => {
+      setNet(state.isConnected);
+    });
+  };
+
+  useEffect(() => {
+    checkNetwork();
+    NetInfo.addEventListener(onNetworkStateChange);
+  }, []);
+
+  console.log('Network connection--->', isNetAvailable);
 
   useEffect(() => {
     const unsubscribe = messaging().onMessage(async remoteMessage => {
@@ -43,6 +63,9 @@ const App = () => {
     </View>
   );
 
+  if (!isNetAvailable) {
+    return <NoInternet />;
+  }
   return (
     <>
       {showSplash ? <SplashScreen /> : <Navigator />}

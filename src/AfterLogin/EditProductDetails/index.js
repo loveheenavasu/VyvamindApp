@@ -112,6 +112,7 @@ const EditProduct = () => {
       {
         text: 'OK',
         onPress: () => {
+          Storage.clearAsyncStorage();
           let user = auth().currentUser;
           setShowLoader(true);
           firestore()
