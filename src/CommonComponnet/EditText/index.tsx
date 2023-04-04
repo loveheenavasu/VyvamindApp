@@ -42,6 +42,7 @@ const EditText = (props: Props) => {
       blurOnSubmit={false}
       returnKeyType={ReturnKeyType}
       onSubmitEditing={OnSubmit}
+      placeholderTextColor={"grey"}
     />
   );
 };

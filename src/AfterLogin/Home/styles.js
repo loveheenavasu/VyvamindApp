@@ -26,6 +26,7 @@ const styles = StyleSheet.create({
   picker: {
     flex: 1,
     marginLeft: scale(40),
+   
   },
   timePicker: {
     fontSize: 18,
@@ -65,6 +66,13 @@ const styles = StyleSheet.create({
     fontSize: scale(12),
     paddingHorizontal: scale(10),
   },
+  pickTime:{ 
+    padding: 5,
+    backgroundColor:'#40B5AD',
+    paddingHorizontal:10,
+    borderRadius:4
+    
+  }
 });
 
 export default styles;

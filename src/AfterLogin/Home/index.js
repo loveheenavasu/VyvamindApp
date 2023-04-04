@@ -60,29 +60,34 @@ const DosageReminderScreen = () => {
       Toast.show({
         type: 'error',
         text1: 'Please select Reminder Time first',
+        visibilityTime: 1500,
+        position: 'top',
       });
     } else {
       setIsEnabled(previousState => !previousState);
       if (!isEnabled) {
         Toast.show({
           type: 'success',
-          text1: 'Remainder is Set successfully',
+          text1: 'Reminder is Set SuccesFully',
         });
       } else {
         Toast.show({
           type: 'success',
-          text1: 'Remainder is disabled',
+          text1: 'Reminder is disabled',
         });
       }
     }
   };
+
   const handleFrequencyChange = newFrequency => {
-    setFrequency(newFrequency);
-    if (isEnabled) {
-      Toast.show({
-        type: 'success',
-        text1: ' Remainder updated successfully',
-      });
+    if (newFrequency != frequency) {
+      setFrequency(newFrequency);
+      if (isEnabled) {
+        Toast.show({
+          type: 'success',
+          text1: 'Reminder updated SuccesFully',
+        });
+      }
     }
   };
 
@@ -149,16 +154,19 @@ const DosageReminderScreen = () => {
         ]}>
         <Label styles={styles.label} title={'Reminder Time'} />
         <View style={styles.time_Con}>
-          <TouchableOpacity onPress={() => setOpen(true)} style={{padding: 5}}>
+          <TouchableOpacity
+            onPress={() => setOpen(true)}
+            style={styles.pickTime}>
             <Label
               styles={styles.time_Label}
               title={
                 selectedTime
                   ? new Date(date).toLocaleTimeString()
-                  : 'Select Time'
+                  : '⏰ Select Time'
               }
             />
           </TouchableOpacity>
+
           <DatePicker
             mode="time"
             is24hourSource="device"
@@ -181,7 +189,7 @@ const DosageReminderScreen = () => {
         <Label title={'Reminder Frequency:'} style={styles.label} />
         <Picker
           selectedValue={frequency}
-          onValueChange={handleFrequencyChange}
+          onValueChange={txt => handleFrequencyChange(txt)}
           style={styles.picker}>
           <Picker.Item
             style={styles.picker_Label}
