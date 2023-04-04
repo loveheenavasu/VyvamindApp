@@ -1,15 +1,15 @@
-import React, { useState, useEffect } from 'react';
-import { View, Switch, TouchableOpacity, Platform } from 'react-native';
+import React, {useState, useEffect} from 'react';
+import {View, Switch, TouchableOpacity, Platform} from 'react-native';
 import PushNotification from 'react-native-push-notification';
-import { Picker } from '@react-native-picker/picker';
+import {Picker} from '@react-native-picker/picker';
 import DatePicker from 'react-native-date-picker';
 import Notifications from '../../Util/Notification';
 import styles from './styles';
 import * as Storage from '../../Service/Storage';
 import Toast from 'react-native-toast-message';
 import Label from '../../CommonComponnet/Label';
-import { useNavigation } from '@react-navigation/native';
-import { verticalScale } from 'react-native-size-matters';
+import {useNavigation} from '@react-navigation/native';
+import {verticalScale} from 'react-native-size-matters';
 import PushNotificationIOS from '@react-native-community/push-notification-ios';
 
 const DosageReminderScreen = () => {
@@ -49,7 +49,6 @@ const DosageReminderScreen = () => {
       };
       Storage.storeData('ISENABLE', JSON.stringify(mActor));
       scheduleReminder();
-
     } else {
       cancelReminder();
       Storage.storeData('ISENABLE', '');
@@ -62,16 +61,14 @@ const DosageReminderScreen = () => {
         type: 'error',
         text1: 'Please select Reminder Time first',
       });
-    }
-    else {
+    } else {
       setIsEnabled(previousState => !previousState);
       if (!isEnabled) {
         Toast.show({
           type: 'success',
-          text1: 'Remainder is Set SuccesFully',
+          text1: 'Remainder is Set successfully',
         });
-      }
-      else {
+      } else {
         Toast.show({
           type: 'success',
           text1: 'Remainder is disabled',
@@ -84,7 +81,7 @@ const DosageReminderScreen = () => {
     if (isEnabled) {
       Toast.show({
         type: 'success',
-        text1: ' Remainder updated SuccesFully',
+        text1: ' Remainder updated successfully',
       });
     }
   };
@@ -104,8 +101,8 @@ const DosageReminderScreen = () => {
         frequency === 'daily'
           ? 'day'
           : frequency === 'weekly'
-            ? 'week'
-            : 'month',
+          ? 'week'
+          : 'month',
       date: reminderTime,
       allowWhileIdle: true,
       priority: 'high', // (optional) set notification priority, default: high
@@ -131,8 +128,8 @@ const DosageReminderScreen = () => {
           frequency === 'daily'
             ? 'day'
             : frequency === 'weekly'
-              ? 'week'
-              : 'month',
+            ? 'week'
+            : 'month',
       });
       PushNotificationIOS.addNotificationRequest;
     }
@@ -148,11 +145,11 @@ const DosageReminderScreen = () => {
       <View
         style={[
           styles.option,
-          { marginBottom: Platform.OS === 'ios' ? 0 : verticalScale(40) },
+          {marginBottom: Platform.OS === 'ios' ? 0 : verticalScale(40)},
         ]}>
         <Label styles={styles.label} title={'Reminder Time'} />
         <View style={styles.time_Con}>
-          <TouchableOpacity onPress={() => setOpen(true)} style={{ padding: 5 }}>
+          <TouchableOpacity onPress={() => setOpen(true)} style={{padding: 5}}>
             <Label
               styles={styles.time_Label}
               title={
@@ -204,11 +201,11 @@ const DosageReminderScreen = () => {
         </Picker>
       </View>
 
-      <View style={[styles.option, { marginTop: verticalScale(30) }]}>
+      <View style={[styles.option, {marginTop: verticalScale(30)}]}>
         <Label style={styles.label} title={'Enable Dosage Reminder:'} />
         <View style={styles.switch_Con}>
           <Switch
-            trackColor={{ false: '#767577', true: '#81b0ff' }}
+            trackColor={{false: '#767577', true: '#81b0ff'}}
             thumbColor={isEnabled ? '#f5dd4b' : '#f4f3f4'}
             ios_backgroundColor="#3e3e3e"
             onValueChange={handleToggleSwitch}
