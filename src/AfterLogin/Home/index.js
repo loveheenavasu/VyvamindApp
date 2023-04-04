@@ -68,13 +68,13 @@ const DosageReminderScreen = () => {
       if (!isEnabled) {
         Toast.show({
           type: 'success',
-          text1: 'Remainder is Set SuccesFully',
+          text1: 'Reminder is Set SuccesFully',
         });
       }
       else {
         Toast.show({
           type: 'success',
-          text1: 'Remainder is disabled',
+          text1: 'Reminder is disabled',
         });
       }
     }
@@ -84,7 +84,7 @@ const DosageReminderScreen = () => {
     if (isEnabled) {
       Toast.show({
         type: 'success',
-        text1: ' Remainder updated SuccesFully',
+        text1: ' Reminder updated SuccesFully',
       });
     }
   };
@@ -152,16 +152,19 @@ const DosageReminderScreen = () => {
         ]}>
         <Label styles={styles.label} title={'Reminder Time'} />
         <View style={styles.time_Con}>
-          <TouchableOpacity onPress={() => setOpen(true)} style={{ padding: 5 }}>
+          <TouchableOpacity 
+          onPress={() => setOpen(true)} 
+          style={styles.pickTime}>
             <Label
               styles={styles.time_Label}
               title={
                 selectedTime
                   ? new Date(date).toLocaleTimeString()
-                  : 'Select Time'
+                  : '⏰ Select Time'
               }
             />
           </TouchableOpacity>
+          
           <DatePicker
             mode="time"
             is24hourSource="device"
@@ -177,7 +180,10 @@ const DosageReminderScreen = () => {
             onCancel={() => {
               setOpen(false);
             }}
+            style={{backgroundColor:'red'}}
           />
+         
+         
         </View>
       </View>
       <View style={[styles.option]}>
