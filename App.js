@@ -1,19 +1,18 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { View, StyleSheet } from 'react-native';
+import React, {useState, useEffect, useRef} from 'react';
+import {View, StyleSheet} from 'react-native';
 import SplashScreen from './src/BeforeLogin/Splash';
 import Toast from 'react-native-toast-message';
 import Navigator from './src/Navigator';
 import messaging from '@react-native-firebase/messaging';
 import NotificationPopup from 'react-native-push-notification-popup';
-import { scale } from 'react-native-size-matters';
+import {scale} from 'react-native-size-matters';
 import Label from './src/CommonComponnet/Label';
-import NetInfo from "@react-native-community/netinfo";
+import NetInfo from '@react-native-community/netinfo';
 import NoInternet from './src/CommonComponnet/NoInternet';
-
 
 const App = () => {
   const [showSplash, setShowSplash] = useState(true);
-  const [isNetAvailable, setNet] = useState('')
+  const [isNetAvailable, setNet] = useState(true);
   const popRef = useRef();
 
   useEffect(() => {
@@ -22,21 +21,20 @@ const App = () => {
     }, 1700);
   }, []);
 
-
-  const onNetworkStateChange = (newState) => {
+  const onNetworkStateChange = newState => {
     setNet(newState.isConnected);
   };
 
   const checkNetwork = () => {
     NetInfo.fetch().then(state => {
-     setNet(state.isConnected)
+      setNet(state.isConnected);
     });
-  }
+  };
 
   useEffect(() => {
     checkNetwork();
     NetInfo.addEventListener(onNetworkStateChange);
-  }, [])
+  }, []);
 
   console.log('Network connection--->', isNetAvailable);
 
@@ -55,7 +53,7 @@ const App = () => {
   }, []);
 
   // Render function
-  const renderCustomPopup = ({ title, body }) => (
+  const renderCustomPopup = ({title, body}) => (
     <View style={styles.main}>
       <View style={styles.noti_Title_Con}>
         <Label styles={styles.app_Title_Label} title={title} />
@@ -66,10 +64,8 @@ const App = () => {
   );
 
   if (!isNetAvailable) {
-    return <NoInternet />
+    return <NoInternet />;
   }
-
-
   return (
     <>
       {showSplash ? <SplashScreen /> : <Navigator />}

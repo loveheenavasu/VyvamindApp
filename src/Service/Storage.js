@@ -19,3 +19,7 @@ export const getData = async key => {
     console.log('--getData---ERROR--->', e);
   }
 };
+
+export const clearAsyncStorage = async () => {
+  AsyncStorage.clear();
+};
