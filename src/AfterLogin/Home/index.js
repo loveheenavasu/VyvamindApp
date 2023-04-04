@@ -60,6 +60,8 @@ const DosageReminderScreen = () => {
       Toast.show({
         type: 'error',
         text1: 'Please select Reminder Time first',
+        visibilityTime: 1500,
+        position: 'top',
       });
     } else {
       setIsEnabled(previousState => !previousState);
@@ -76,13 +78,16 @@ const DosageReminderScreen = () => {
       }
     }
   };
+
   const handleFrequencyChange = newFrequency => {
-    setFrequency(newFrequency);
-    if (isEnabled) {
-      Toast.show({
-        type: 'success',
-        text1: ' Reminder updated SuccesFully',
-      });
+    if (newFrequency != frequency) {
+      setFrequency(newFrequency);
+      if (isEnabled) {
+        Toast.show({
+          type: 'success',
+          text1: 'Reminder updated SuccesFully',
+        });
+      }
     }
   };
 
@@ -149,9 +154,9 @@ const DosageReminderScreen = () => {
         ]}>
         <Label styles={styles.label} title={'Reminder Time'} />
         <View style={styles.time_Con}>
-          <TouchableOpacity 
-          onPress={() => setOpen(true)} 
-          style={styles.pickTime}>
+          <TouchableOpacity
+            onPress={() => setOpen(true)}
+            style={styles.pickTime}>
             <Label
               styles={styles.time_Label}
               title={
@@ -161,7 +166,7 @@ const DosageReminderScreen = () => {
               }
             />
           </TouchableOpacity>
-          
+
           <DatePicker
             mode="time"
             is24hourSource="device"
@@ -177,17 +182,14 @@ const DosageReminderScreen = () => {
             onCancel={() => {
               setOpen(false);
             }}
-            style={{backgroundColor:'red'}}
           />
-         
-         
         </View>
       </View>
       <View style={[styles.option]}>
         <Label title={'Reminder Frequency:'} style={styles.label} />
         <Picker
           selectedValue={frequency}
-          onValueChange={handleFrequencyChange}
+          onValueChange={txt => handleFrequencyChange(txt)}
           style={styles.picker}>
           <Picker.Item
             style={styles.picker_Label}

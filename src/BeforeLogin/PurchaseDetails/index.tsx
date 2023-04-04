@@ -36,7 +36,6 @@ const Purchase = () => {
     var authFlag = true;
     auth().onAuthStateChanged(res => {
       if (res && authFlag) {
-        console.log('Firebase - onAuthStateChanged', {res});
         authFlag = false;
         Storage.getData(UserId)
           .then(res => {

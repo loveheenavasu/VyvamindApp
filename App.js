@@ -1,5 +1,5 @@
 import React, {useState, useEffect, useRef} from 'react';
-import {View, StyleSheet} from 'react-native';
+import {View, StyleSheet, Linking, Alert} from 'react-native';
 import SplashScreen from './src/BeforeLogin/Splash';
 import Toast from 'react-native-toast-message';
 import Navigator from './src/Navigator';
@@ -14,6 +14,29 @@ const App = () => {
   const [showSplash, setShowSplash] = useState(true);
   const [isNetAvailable, setNet] = useState(true);
   const popRef = useRef();
+
+  async function requestUserPermission() {
+    const authorizationStatus = await messaging().requestPermission();
+    if (authorizationStatus) {
+      console.log('Permission status:', authorizationStatus);
+    } else {
+      Alert.alert(
+        '',
+        "Notification permission is mandatory for Vyvamind App, Otherwise you won't able to get notification regarding dose reminder",
+        [
+          {
+            text: 'Cancel',
+            onPress: () => console.log('Cancel Pressed'),
+            style: 'cancel',
+          },
+          {text: 'OK', onPress: () => Linking.openSettings()},
+        ],
+      );
+    }
+  }
+  useEffect(() => {
+    requestUserPermission();
+  }, []);
 
   useEffect(() => {
     setTimeout(() => {
@@ -36,8 +59,6 @@ const App = () => {
     NetInfo.addEventListener(onNetworkStateChange);
   }, []);
 
-  console.log('Network connection--->', isNetAvailable);
-
   useEffect(() => {
     const unsubscribe = messaging().onMessage(async remoteMessage => {
       popRef?.current.show({
@@ -45,7 +66,7 @@ const App = () => {
         timeText: 'Now',
         title: remoteMessage?.notification?.title,
         body: remoteMessage?.notification?.body,
-        slideOutTime: 40000,
+        slideOutTime: 30000,
       });
     });
 
