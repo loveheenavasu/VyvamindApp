@@ -14,7 +14,7 @@ const ToastMsg = (props: Props) => {
     text1: msg,
     position: 'bottom',
     bottomOffset: verticalScale(80),
-    visibilityTime: 1200,
+    visibilityTime: 1300,
   });
 };
 export default ToastMsg;
