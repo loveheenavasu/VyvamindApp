@@ -18,21 +18,34 @@ const DosageReminderScreen = () => {
   const [frequency, setFrequency] = useState('daily');
   const [reminderTime, setReminderTime] = useState();
   const [date, setDate] = useState(new Date());
-  const [open, setOpen] = useState(false);
-  const [selectedTime, setSelectedTime] = useState('');
+  const [showEveningTimePicker, setShowEveningTimePicker] = useState(false);
+  const [showMorningTimePicker, setShowmorningTimePicker] = useState(false);
+  const [eveningTime, seteveningTime] = useState('');
+  const [morningTime, setMorningTimeAlerm] = useState('');
 
   useEffect(() => {
     Storage.getData('ISENABLE')
       .then(res => {
         let mData = JSON.parse(res);
-        if (mData?.selectedTime) {
+        if (mData?.eveningTime && mData?.morningTime) {
           setFrequency(mData?.frequency);
-          setDate(new Date(mData?.selectedTime));
-          setSelectedTime(mData?.selectedTime);
-          setReminderTime(new Date(mData?.selectedTime).toLocaleString());
+          setDate(new Date(mData?.eveningTime));
+          seteveningTime(mData?.eveningTime);
+          setReminderTime(new Date(mData?.eveningTime).toLocaleString());
+          setMorningTimeAlerm(mData?.morningTime);
           setIsEnabled(true);
-        } else {
-          console.log('----inside-else-->', 1234);
+        } else if (mData?.eveningTime) {
+          setFrequency(mData?.frequency);
+          setDate(new Date(mData?.eveningTime));
+          seteveningTime(mData?.eveningTime);
+          setReminderTime(new Date(mData?.eveningTime).toLocaleString());
+          setIsEnabled(true);
+        } else if (mData?.morningTime) {
+          setFrequency(mData?.frequency);
+          setDate(new Date(mData?.morningTime));
+          setMorningTimeAlerm(mData?.morningTime);
+          setReminderTime(new Date(mData?.morningTime).toLocaleString());
+          setIsEnabled(true);
         }
       })
       .catch(Error => {
@@ -45,10 +58,18 @@ const DosageReminderScreen = () => {
       let mActor = {
         isEnabled: isEnabled,
         frequency: frequency,
-        selectedTime: selectedTime,
+        eveningTime: eveningTime,
+        morningTime: morningTime,
       };
+      if (morningTime && eveningTime) {
+        scheduleReminder('morning');
+        scheduleReminder('evening');
+      } else if (morningTime) {
+        scheduleReminder('morning');
+      } else {
+        scheduleReminder('evening');
+      }
       Storage.storeData('ISENABLE', JSON.stringify(mActor));
-      scheduleReminder();
     } else {
       cancelReminder();
       Storage.storeData('ISENABLE', '');
@@ -56,7 +77,7 @@ const DosageReminderScreen = () => {
   }, [isEnabled, frequency, reminderTime]);
 
   const handleToggleSwitch = () => {
-    if (!selectedTime) {
+    if (!eveningTime && !morningTime) {
       ToastMsg({
         status: 'error',
         msg: 'Please select Reminder Time first',
@@ -66,7 +87,7 @@ const DosageReminderScreen = () => {
       if (!isEnabled) {
         ToastMsg({
           status: 'success',
-          msg: 'Reminder is Set SuccesFully',
+          msg: 'Reminder is Set Successfully',
         });
       } else {
         ToastMsg({
@@ -83,7 +104,7 @@ const DosageReminderScreen = () => {
       if (isEnabled) {
         ToastMsg({
           status: 'success',
-          msg: 'Reminder updated SuccesFully',
+          msg: 'Reminder updated Successfully',
         });
       }
     }
@@ -93,7 +114,7 @@ const DosageReminderScreen = () => {
     setReminderTime(newTime);
   };
 
-  const scheduleReminder = async () => {
+  const scheduleReminder = async AMPM => {
     const reminderOptions = {
       channelId: 'reminders',
       title: 'Vyvamind Dosage Reminder',
@@ -106,21 +127,21 @@ const DosageReminderScreen = () => {
           : frequency === 'weekly'
           ? 'week'
           : 'month',
-      date: reminderTime,
+      date: AMPM === 'morning' ? morningTime : eveningTime,
       allowWhileIdle: true,
       priority: 'high', // (optional) set notification priority, default: high
       visibility: 'public', // (optional) set notification visibility, default: private
       importance: 'high',
     };
     if (Platform.OS === 'android') {
-      await PushNotification.cancelAllLocalNotifications();
+      // await PushNotification.cancelAllLocalNotifications();
       Notifications.schduleNotification(reminderOptions);
     } else {
       PushNotificationIOS.addNotificationRequest({
-        id: '122',
+        id: AMPM === 'morning' ? 'Morning' : 'Evening',
         title: 'Vyvamind Dosage Reminder',
         body: 'It is time to take your Vyvamind capsule!',
-        fireDate: new Date(selectedTime),
+        fireDate: new Date(AMPM === 'morning' ? morningTime : eveningTime),
         repeats: true,
         repeatsComponent: {
           hour: true,
@@ -134,7 +155,6 @@ const DosageReminderScreen = () => {
             ? 'week'
             : 'month',
       });
-      PushNotificationIOS.addNotificationRequest;
     }
   };
 
@@ -145,21 +165,17 @@ const DosageReminderScreen = () => {
   return (
     <View style={styles.container}>
       <Label styles={styles.header} title={'Dosage Reminder Settings'} />
-      <View
-        style={[
-          styles.option,
-          {marginBottom: Platform.OS === 'ios' ? 0 : verticalScale(40)},
-        ]}>
-        <Label styles={styles.label} title={'Reminder Time'} />
+      <View style={[styles.option, {marginBottom: verticalScale(40)}]}>
+        <Label styles={styles.label} title={'Reminder for Morning time ☀️'} />
         <View style={styles.time_Con}>
           <TouchableOpacity
-            onPress={() => setOpen(true)}
+            onPress={() => setShowmorningTimePicker(true)}
             style={styles.pickTime}>
             <Label
               styles={styles.time_Label}
               title={
-                selectedTime
-                  ? new Date(date).toLocaleTimeString()
+                morningTime
+                  ? new Date(morningTime).toLocaleTimeString()
                   : '⏰ Select Time'
               }
             />
@@ -169,16 +185,51 @@ const DosageReminderScreen = () => {
             mode="time"
             is24hourSource="device"
             modal
-            open={open}
+            open={showMorningTimePicker}
             date={date}
             onConfirm={date => {
-              setOpen(false);
+              setShowmorningTimePicker(false);
+              setMorningTimeAlerm(date);
+            }}
+            onCancel={() => {
+              setShowmorningTimePicker(false);
+            }}
+          />
+        </View>
+      </View>
+      <View
+        style={[
+          styles.option,
+          {marginBottom: Platform.OS === 'ios' ? 0 : verticalScale(40)},
+        ]}>
+        <Label styles={styles.label} title={'Reminder for Evening time 🌙'} />
+        <View style={styles.time_Con}>
+          <TouchableOpacity
+            onPress={() => setShowEveningTimePicker(true)}
+            style={styles.pickTime}>
+            <Label
+              styles={styles.time_Label}
+              title={
+                eveningTime
+                  ? new Date(date).toLocaleTimeString()
+                  : '⏰ Select Time'
+              }
+            />
+          </TouchableOpacity>
+          <DatePicker
+            mode="time"
+            is24hourSource="device"
+            modal
+            open={showEveningTimePicker}
+            date={date}
+            onConfirm={date => {
+              setShowEveningTimePicker(false);
               setDate(date);
-              setSelectedTime(date);
+              seteveningTime(date);
               handleTimeChange(date);
             }}
             onCancel={() => {
-              setOpen(false);
+              setShowEveningTimePicker(false);
             }}
           />
         </View>

@@ -5,7 +5,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
-    padding: 20,
+    padding: 12,
   },
   header: {
     fontSize: scale(23),
@@ -20,13 +20,12 @@ const styles = StyleSheet.create({
   label: {
     fontSize: scale(14),
     color: '#000',
-    width: '58%',
+    width: '62%',
     opacity: 0.8,
   },
   picker: {
     flex: 1,
     marginLeft: scale(40),
-   
   },
   timePicker: {
     fontSize: 18,
@@ -43,7 +42,7 @@ const styles = StyleSheet.create({
     color: '#000',
   },
   time_Con: {
-    width: '40%',
+    width: '38%',
     justifyContent: 'center',
     alignItems: 'center',
   },
@@ -66,13 +65,12 @@ const styles = StyleSheet.create({
     fontSize: scale(12),
     paddingHorizontal: scale(10),
   },
-  pickTime:{ 
+  pickTime: {
     padding: 5,
-    backgroundColor:'#40B5AD',
-    paddingHorizontal:10,
-    borderRadius:4
-    
-  }
+    backgroundColor: '#40B5AD',
+    paddingHorizontal: 10,
+    borderRadius: 4,
+  },
 });
 
 export default styles;
