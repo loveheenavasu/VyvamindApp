@@ -9,7 +9,7 @@ import {
 } from 'react-native';
 import Label from '../../CommonComponnet/Label';
 import FastImage from 'react-native-fast-image';
-import {SplashIcon} from '../../Util/image';
+import {SplashIcon} from '../../Util/Image';
 import {isEmailValid} from '../../Util/Validator';
 import styles from './styles';
 import {useNavigation} from '@react-navigation/native';

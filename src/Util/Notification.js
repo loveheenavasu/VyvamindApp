@@ -27,7 +27,7 @@ class Notifications {
         channelName: 'Task reminder notifications', // (required)
         channelDescription: 'Reminder for any tasks',
       },
-      (created) => console.log(`createChannel returned '${created}'`) // (optional) callback returns whether the channel was created, false means it already existed.
+      created => console.log(`createChannel returned '${created}'`), // (optional) callback returns whether the channel was created, false means it already existed.
     );
 
     PushNotification.getScheduledLocalNotifications(rn => {
@@ -36,14 +36,7 @@ class Notifications {
   }
 
   schduleNotification(date) {
-    // console.log("---date--123--->", date);
-    // PushNotification.localNotificationSchedule({ 
-    //   channelId: 'reminders',
-    //   title: '🔔 Reminder!',
-    //   message: 'You have set this reminder 3',
-    //   date,
-    // });
-    PushNotification.localNotificationSchedule(date)
+    PushNotification.localNotificationSchedule(date);
   }
 }
 

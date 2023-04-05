@@ -10,7 +10,7 @@ import {
 } from 'react-native';
 import Header from '../../CommonComponnet/Header';
 import FastImage from 'react-native-fast-image';
-import {SplashIcon} from '../../Util/image';
+import {SplashIcon} from '../../Util/Image';
 import Label from '../../CommonComponnet/Label';
 import EditText from '../../CommonComponnet/EditText';
 import * as Storage from '../../Service/Storage';

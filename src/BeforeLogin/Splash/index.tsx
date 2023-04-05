@@ -1,6 +1,5 @@
 import React, {useState, useRef, useEffect} from 'react';
 import {View, Text} from 'react-native';
-import {SplashIcon, AppLogo} from '../../Util/image';
 import FastImage from 'react-native-fast-image';
 import {scale, verticalScale} from 'react-native-size-matters';
 import Lottie from 'lottie-react-native';
