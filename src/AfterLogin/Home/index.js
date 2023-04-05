@@ -66,7 +66,7 @@ const DosageReminderScreen = () => {
       if (!isEnabled) {
         ToastMsg({
           status: 'success',
-          text1: 'Reminder is Set SuccesFully',
+          msg: 'Reminder is Set SuccesFully',
         });
       } else {
         ToastMsg({

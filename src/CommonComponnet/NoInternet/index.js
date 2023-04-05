@@ -1,7 +1,7 @@
 import {StyleSheet, View, Text, Image} from 'react-native';
 import {scale} from 'react-native-size-matters';
 import Label from '../Label';
-import { NoInternetIcon } from '../../Util/Image';
+import {NoInternetIcon} from '../../Util/Image';
 
 export default NoInternet = () => {
   return (

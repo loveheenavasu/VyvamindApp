@@ -112,9 +112,11 @@ const EditProduct = () => {
       {
         text: 'OK',
         onPress: () => {
+          setTimeout(() => {
+            setShowLoader(true);
+          }, 500);
           Storage.clearAsyncStorage();
           let user = auth().currentUser;
-          setShowLoader(true);
           firestore()
             .collection('Users')
             .doc(user?.uid)
@@ -140,11 +142,32 @@ const EditProduct = () => {
                   .catch(error => {
                     console.log('-----error--->', error);
                     setShowLoader(false);
+                    navigation.dispatch(
+                      CommonActions.reset({
+                        index: 0,
+                        routes: [{name: 'BeforeLoginStack'}],
+                      }),
+                    );
+                    ToastMsg({
+                      status: 'success',
+                      msg: 'Your account has been deleted successfully',
+                    });
                   });
               }, 2000);
             })
             .catch(Error => {
               console.log('--User deleted!----Error---->', Error);
+              setShowLoader(false);
+              navigation.dispatch(
+                CommonActions.reset({
+                  index: 0,
+                  routes: [{name: 'BeforeLoginStack'}],
+                }),
+              );
+              ToastMsg({
+                status: 'success',
+                msg: 'Your account has been deleted successfully',
+              });
             });
         },
       },
