@@ -6,11 +6,11 @@ import DatePicker from 'react-native-date-picker';
 import Notifications from '../../Util/Notification';
 import styles from './styles';
 import * as Storage from '../../Service/Storage';
-import Toast from 'react-native-toast-message';
 import Label from '../../CommonComponnet/Label';
 import {useNavigation} from '@react-navigation/native';
 import {verticalScale} from 'react-native-size-matters';
 import PushNotificationIOS from '@react-native-community/push-notification-ios';
+import ToastMsg from '../../CommonComponnet/Toast';
 
 const DosageReminderScreen = () => {
   const navigation = useNavigation();
@@ -57,23 +57,21 @@ const DosageReminderScreen = () => {
 
   const handleToggleSwitch = () => {
     if (!selectedTime) {
-      Toast.show({
-        type: 'error',
-        text1: 'Please select Reminder Time first',
-        visibilityTime: 1500,
-        position: 'top',
+      ToastMsg({
+        status: 'error',
+        msg: 'Please select Reminder Time first',
       });
     } else {
       setIsEnabled(previousState => !previousState);
       if (!isEnabled) {
-        Toast.show({
-          type: 'success',
+        ToastMsg({
+          status: 'success',
           text1: 'Reminder is Set SuccesFully',
         });
       } else {
-        Toast.show({
-          type: 'success',
-          text1: 'Reminder is disabled',
+        ToastMsg({
+          status: 'success',
+          msg: 'Reminder is disabled',
         });
       }
     }
@@ -83,9 +81,9 @@ const DosageReminderScreen = () => {
     if (newFrequency != frequency) {
       setFrequency(newFrequency);
       if (isEnabled) {
-        Toast.show({
-          type: 'success',
-          text1: 'Reminder updated SuccesFully',
+        ToastMsg({
+          status: 'success',
+          msg: 'Reminder updated SuccesFully',
         });
       }
     }

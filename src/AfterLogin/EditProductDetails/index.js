@@ -10,17 +10,17 @@ import {
 } from 'react-native';
 import Header from '../../CommonComponnet/Header';
 import FastImage from 'react-native-fast-image';
-import {SplashIcon} from '../../Util/image';
+import {SplashIcon} from '../../Util/Image';
 import Label from '../../CommonComponnet/Label';
 import EditText from '../../CommonComponnet/EditText';
 import * as Storage from '../../Service/Storage';
 import {UserId} from '../../Util/StorageKey';
 import firestore from '@react-native-firebase/firestore';
 import Loader from '../../CommonComponnet/Loader';
-import {Toast} from 'react-native-toast-message/lib/src/Toast';
 import styles from './styles';
 import auth from '@react-native-firebase/auth';
 import {CommonActions, useNavigation} from '@react-navigation/native';
+import ToastMsg from '../../CommonComponnet/Toast';
 
 const EditProduct = () => {
   const navigation = useNavigation();
@@ -58,9 +58,9 @@ const EditProduct = () => {
 
   const submitQuantity = () => {
     if (!quantity || !dose) {
-      Toast.show({
-        type: 'error',
-        text1: 'All fields are required',
+      ToastMsg({
+        status: 'error',
+        msg: 'All fields are required',
       });
     } else {
       Keyboard.dismiss();
@@ -86,9 +86,9 @@ const EditProduct = () => {
             })
             .then(res => {
               setShowLoader(false);
-              Toast.show({
-                type: 'success',
-                text1: 'Dose updated successfully',
+              ToastMsg({
+                status: 'success',
+                msg: 'Dose updated successfully',
               });
             })
             .catch(Error => {
@@ -132,9 +132,9 @@ const EditProduct = () => {
                         routes: [{name: 'BeforeLoginStack'}],
                       }),
                     );
-                    Toast.show({
-                      type: 'success',
-                      text1: 'Your account has been deleted successfully',
+                    ToastMsg({
+                      status: 'success',
+                      msg: 'Your account has been deleted successfully',
                     });
                   })
                   .catch(error => {

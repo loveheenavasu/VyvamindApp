@@ -9,6 +9,7 @@ import {scale} from 'react-native-size-matters';
 import Label from './src/CommonComponnet/Label';
 import NetInfo from '@react-native-community/netinfo';
 import NoInternet from './src/CommonComponnet/NoInternet';
+import {checkNotifications} from 'react-native-permissions';
 
 const App = () => {
   const [showSplash, setShowSplash] = useState(true);
@@ -18,25 +19,37 @@ const App = () => {
   async function requestUserPermission() {
     const authorizationStatus = await messaging().requestPermission();
     if (authorizationStatus) {
-      console.log('Permission status:', authorizationStatus);
+      checkNotifications()
+        .then(res => {
+          if (res?.status === 'denied') {
+            showAlert();
+          }
+        })
+        .catch(Error => {
+          console.log('--Error------>', Error);
+        });
     } else {
-      Alert.alert(
-        '',
-        "Notification permission is mandatory for Vyvamind App, Otherwise you won't able to get notification regarding dose reminder",
-        [
-          {
-            text: 'Cancel',
-            onPress: () => console.log('Cancel Pressed'),
-            style: 'cancel',
-          },
-          {text: 'OK', onPress: () => Linking.openSettings()},
-        ],
-      );
+      showAlert();
     }
   }
   useEffect(() => {
     requestUserPermission();
   }, []);
+
+  const showAlert = () => {
+    Alert.alert(
+      '',
+      "Notification permission is mandatory for Vyvamind App, Otherwise you won't able to get notification regarding dose reminder",
+      [
+        {
+          text: 'Cancel',
+          onPress: () => console.log('Cancel Pressed'),
+          style: 'cancel',
+        },
+        {text: 'OK', onPress: () => Linking.openSettings()},
+      ],
+    );
+  };
 
   useEffect(() => {
     setTimeout(() => {

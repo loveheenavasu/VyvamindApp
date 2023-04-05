@@ -1,25 +1,20 @@
-import { View } from 'react-native';
+import {View} from 'react-native';
+import {verticalScale} from 'react-native-size-matters';
 import Toast from 'react-native-toast-message';
 
 interface Props {
-    status: string,
-    msg: string
+  status: string;
+  msg: string;
 }
+
 const ToastMsg = (props: Props) => {
-    const { status, msg } = props;
-    console.log('Status-->', status);
-    console.log('msg-->', msg);
-
-    const showToast = (status: string, msg: string) => {
-        Toast.show({
-            type: status,
-            text1: msg,
-        })
-    };
-    showToast(status, msg)
-    return (
-        <View />
-    )
-}
-
-export default ToastMsg
+  const {status, msg} = props;
+  return Toast.show({
+    type: status,
+    text1: msg,
+    position: 'bottom',
+    bottomOffset: verticalScale(80),
+    visibilityTime: 1200,
+  });
+};
+export default ToastMsg;
