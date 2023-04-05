@@ -66,7 +66,7 @@ const DosageReminderScreen = () => {
       if (!isEnabled) {
         ToastMsg({
           status: 'success',
-          msg: 'Reminder is Set SuccesFully',
+          msg: 'Reminder is Set Successfully',
         });
       } else {
         ToastMsg({
@@ -83,7 +83,7 @@ const DosageReminderScreen = () => {
       if (isEnabled) {
         ToastMsg({
           status: 'success',
-          msg: 'Reminder updated SuccesFully',
+          msg: 'Reminder updated Successfully',
         });
       }
     }
