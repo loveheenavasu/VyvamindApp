@@ -10,7 +10,6 @@ import {
 import Label from '../../CommonComponnet/Label';
 import FastImage from 'react-native-fast-image';
 import {SplashIcon} from '../../Util/image';
-import Toast from 'react-native-toast-message';
 import {isEmailValid} from '../../Util/Validator';
 import styles from './styles';
 import {useNavigation} from '@react-navigation/native';
@@ -22,6 +21,7 @@ import * as Storage from '../../Service/Storage';
 import {UserId} from '../../Util/StorageKey';
 import firestore from '@react-native-firebase/firestore';
 import messaging from '@react-native-firebase/messaging';
+import ToastMsg from '../../CommonComponnet/Toast';
 
 const Purchase = () => {
   const navigation = useNavigation<any>();
@@ -98,14 +98,14 @@ const Purchase = () => {
 
   const submit = () => {
     if (!email) {
-      Toast.show({
-        type: 'error',
-        text1: 'Please enter email',
+      ToastMsg({
+        status: 'error',
+        msg: 'Please enter email',
       });
     } else if (isEmailValid(email.trim())) {
-      Toast.show({
-        type: 'error',
-        text1: 'Please enter valid email',
+      ToastMsg({
+        status: 'error',
+        msg: 'Please enter valid email',
       });
     } else {
       Keyboard.dismiss();
@@ -166,9 +166,9 @@ const Purchase = () => {
   const submitQuantity = () => {
     const currentDate = new Date();
     if (!quantity || !dose) {
-      Toast.show({
-        type: 'error',
-        text1: 'All fields are required',
+      ToastMsg({
+        status: 'error',
+        msg: 'All fields are required',
       });
     } else {
       Keyboard.dismiss();
@@ -194,9 +194,9 @@ const Purchase = () => {
             })
             .then(res => {
               setShowLoader(false);
-              Toast.show({
-                type: 'success',
-                text1: 'Details submit successfully',
+              ToastMsg({
+                status: 'success',
+                msg: 'Details submit successfully',
               });
               navigation.dispatch(
                 CommonActions.reset({
