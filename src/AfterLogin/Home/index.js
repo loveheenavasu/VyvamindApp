@@ -162,6 +162,18 @@ const DosageReminderScreen = () => {
     PushNotification.cancelAllLocalNotifications();
   };
 
+  // Morning Time
+  const morningMinTime = new Date();
+  morningMinTime.setHours(0, 0, 0, 0);
+  const morningMaxTime = new Date();
+  morningMaxTime.setHours(11, 59, 0, 0);
+
+  // Evening Time
+  const eveningMinTime = new Date();
+  eveningMinTime.setHours(12, 0, 0, 0);
+  const eveningXaxTime = new Date();
+  eveningXaxTime.setHours(23, 59, 0, 0);
+
   return (
     <View style={styles.container}>
       <Label styles={styles.header} title={'Dosage Reminder Settings'} />
@@ -182,11 +194,14 @@ const DosageReminderScreen = () => {
           </TouchableOpacity>
 
           <DatePicker
+            title={'Reminder for Morning time'}
+            minimumDate={morningMinTime}
+            maximumDate={morningMaxTime}
             mode="time"
             is24hourSource="device"
             modal
             open={showMorningTimePicker}
-            date={date}
+            date={morningMinTime}
             onConfirm={date => {
               setShowmorningTimePicker(false);
               setMorningTimeAlerm(date);
@@ -217,11 +232,14 @@ const DosageReminderScreen = () => {
             />
           </TouchableOpacity>
           <DatePicker
+            title={'Reminder for Evening time'}
+            minimumDate={eveningMinTime}
+            maximumDate={eveningXaxTime}
             mode="time"
             is24hourSource="device"
             modal
             open={showEveningTimePicker}
-            date={date}
+            date={eveningMinTime}
             onConfirm={date => {
               setShowEveningTimePicker(false);
               setDate(date);

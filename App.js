@@ -17,20 +17,37 @@ const App = () => {
   const popRef = useRef();
 
   async function requestUserPermission() {
-    const authorizationStatus = await messaging().requestPermission();
-    if (authorizationStatus) {
-      checkNotifications()
-        .then(res => {
-          if (res?.status === 'denied') {
-            showAlert();
-          }
-        })
-        .catch(Error => {
-          console.log('--Error------>', Error);
-        });
-    } else {
-      showAlert();
-    }
+    // const authorizationStatus = await messaging().requestPermission();
+    messaging()
+      .requestPermission()
+      .then(res => {
+        console.log('----res---->', res);
+        checkNotifications()
+          .then(res => {
+            if (res?.status === 'denied') {
+              showAlert();
+            }
+          })
+          .catch(Error => {
+            console.log('--Error------>', Error);
+          });
+      })
+      .catch(Error => {
+        console.log('-------->', Error);
+      });
+    // if (authorizationStatus) {
+    //   checkNotifications()
+    //     .then(res => {
+    //       if (res?.status === 'denied') {
+    //         showAlert();
+    //       }
+    //     })
+    //     .catch(Error => {
+    //       console.log('--Error------>', Error);
+    //     });
+    // } else {
+    //   showAlert();
+    // }
   }
   useEffect(() => {
     requestUserPermission();

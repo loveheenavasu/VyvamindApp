@@ -3,7 +3,7 @@ import {View, Text} from 'react-native';
 import FastImage from 'react-native-fast-image';
 import {scale, verticalScale} from 'react-native-size-matters';
 import Lottie from 'lottie-react-native';
-import {AppLogo}  from "../../Util/Image";
+import {AppLogo} from '../../Util/Image';
 
 const SplashScreen = () => {
   const [logoVisible, showLogo] = useState(false);
@@ -25,7 +25,13 @@ const SplashScreen = () => {
   }, []);
 
   return (
-    <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+    <View
+      style={{
+        width: '100%',
+        height: '100%',
+        justifyContent: 'center',
+        alignItems: 'center',
+      }}>
       <Lottie
         ref={lottieRef}
         source={require('../../assets/Lottie/splash.json')}
