@@ -162,6 +162,20 @@ const DosageReminderScreen = () => {
     PushNotification.cancelAllLocalNotifications();
   };
 
+
+
+//  Morning Time
+const minTime = new Date();
+minTime.setHours(0, 0, 0, 0);
+const maxTime = new Date();
+maxTime.setHours(11, 59, 0, 0);
+
+// Evening Time
+const eveningMinTime = new Date();
+eveningMinTime.setHours(12, 0, 0, 0);
+const eveningXaxTime = new Date();
+eveningXaxTime.setHours(23, 59, 0, 0);
+
   return (
     <View style={styles.container}>
       <Label styles={styles.header} title={'Dosage Reminder Settings'} />
@@ -194,6 +208,9 @@ const DosageReminderScreen = () => {
             onCancel={() => {
               setShowmorningTimePicker(false);
             }}
+            // minuteInterval={60}
+          minimumDate={minTime}
+          maximumDate={maxTime}
           />
         </View>
       </View>
@@ -231,6 +248,9 @@ const DosageReminderScreen = () => {
             onCancel={() => {
               setShowEveningTimePicker(false);
             }}
+            minimumDate={eveningMinTime}
+            maximumDate={eveningXaxTime}
+            // minuteInterval={60}
           />
         </View>
       </View>
